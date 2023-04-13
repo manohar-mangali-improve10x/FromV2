@@ -1,11 +1,17 @@
 package com.improve10x.formsv2;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class IdentityActivity extends AppCompatActivity {
@@ -14,30 +20,11 @@ public class IdentityActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identity);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Identity");
+        actionBar.setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
-        String email =  intent.getStringExtra("email");
-        String userName = intent.getStringExtra("userName");
-        String firstName = intent.getStringExtra("firstName");
-        String lastName = intent.getStringExtra("lastName");
-        String hNo = intent.getStringExtra("hNo");
-        String city = intent.getStringExtra("city");
-        String state = intent.getStringExtra("state");
-        String street = intent.getStringExtra("street");
-        String country = intent.getStringExtra("country");
-        String date = intent.getStringExtra("date");
-        String place = intent.getStringExtra("place");
-        String company = intent.getStringExtra("company");
-        String experience = intent.getStringExtra("experience");
-        String designation = intent.getStringExtra("designation");
-        String bank = intent.getStringExtra("bank");
-        String holder = intent.getStringExtra("holder");
-        String accountNo = intent.getStringExtra("accountNo");
-        String ifsc = intent.getStringExtra("ifsc");
-        String cardNo = intent.getStringExtra("cardNo");
-        String cardHolder = intent.getStringExtra("cardHolder");
-        String expiry = intent.getStringExtra("expiry");
-        String cvv = intent.getStringExtra("cvv");
-        Toast.makeText(this,  email + " " + userName + " " + firstName +  " " + lastName + "  " + hNo + " " + city + " " +state + " " + street + " " + country + " " + date + " " + place + " " +company + " " +experience + " " + designation + " " + bank + " " + holder + " " + accountNo + "  " + ifsc+ " " + cardNo + " " + cardHolder + " " + expiry + " " + cvv, Toast.LENGTH_LONG).show();
+        Bundle bundle = intent.getExtras();
         EditText panNoTxt = findViewById(R.id.panno_txt);
         panNoTxt.setText("FHDFG342K");
         EditText aadhaarNoTxt = findViewById(R.id.aadharno_txt);
@@ -50,33 +37,42 @@ public class IdentityActivity extends AppCompatActivity {
         nextBtn.setOnClickListener(v -> {
             String panNo = panNoTxt.getText().toString();
             String aadhaarNo = aadhaarNoTxt.getText().toString();
-            Intent intent1 = new Intent(this,RegistrationSuccessfullActivity.class);
-            intent1.putExtra("email",email);
-            intent1.putExtra("userName",userName);
-            intent1.putExtra("firstName",firstName);
-            intent1.putExtra("lastName",lastName);
-            intent1.putExtra("hNo",hNo);
-            intent1.putExtra("street",street);
-            intent1.putExtra("city",city);
-            intent1.putExtra("state",state);
-            intent1.putExtra("country",country);
-            intent1.putExtra("date",date);
-            intent1.putExtra("place",place);
-            intent1.putExtra("company",company);
-            intent1.putExtra("experience",experience);
-            intent1.putExtra("designation",designation);
-            intent1.putExtra("bank",bank);
-            intent1.putExtra("holder",holder);
-            intent1.putExtra("accountNo",accountNo);
-            intent1.putExtra("ifsc",ifsc);
-            intent1.putExtra("cardNo",cardNo);
-            intent1.putExtra("cardHolder",cardHolder);
-            intent1.putExtra("expiry",expiry);
-            intent1.putExtra("cvv",cvv);
-            intent1.putExtra("panNo",panNo);
-            intent1.putExtra("aadhaarNo",aadhaarNo);
+            Intent intent1 = new Intent(this, RegistrationSuccessfullActivity.class);
+            intent1.putExtras(bundle);
+            intent1.putExtra("panNo", panNo);
+            intent1.putExtra("aadhaarNo", aadhaarNo);
             startActivity(intent1);
 
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Toast.makeText(this, "good bye", Toast.LENGTH_SHORT).show();
+            finish();
+            return true;
+        } else if (item.getItemId() == R.id.help_item) {
+            Toast.makeText(this, "help me", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (item.getItemId() == R.id.logout_item) {
+            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (item.getItemId() == R.id.signup_item) {
+            Toast.makeText(this, "signup app", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (item.getItemId() == R.id.share_item) {
+            Toast.makeText(this, "share with friends", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.identity_menu,menu);
+        return true;
     }
 }
